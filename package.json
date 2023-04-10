@@ -1,0 +1,17 @@
+{
+  "name": "api-restful-express-mongodb",
+  "version": "1.0.0",
+  "description": "## Criar uma API nos padrões RESTful, que terá um CRUD completo.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3",
+    "nodemon": "^2.0.22"
+  }
+}
