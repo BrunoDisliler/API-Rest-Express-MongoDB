@@ -4,8 +4,6 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 
-const Person = require("./models/Person");
-
 // Forma de ler JSON / Middlewares
 app.use(
 	express.urlencoded({
@@ -16,35 +14,8 @@ app.use(
 app.use(express.json());
 
 // Rotas da API
-app.post("/person", async (req, res) => {
-	const { name, salary, approved } = req.body;
-
-	if (!name) {
-		res.status(422).json({ message: "O nome é obrigatório" });
-	} else if (!salary) {
-		res.status(422).json({ message: "O salário é obrigatório" });
-	} else if (salary <= 0) {
-		res.status(422).json({ message: "Insira um valor válido para o salário" });
-	} else if (!approved) {
-		res.status(422).json({ message: "O campo é obrigatório" });
-	}
-
-	const person = {
-		name,
-		salary,
-		approved,
-	};
-	try {
-		// Criando dados
-		await Person.create(person);
-
-		res
-			.status(201)
-			.json({ message: "Pessoa inserida no sistema com sucesso!" });
-	} catch (error) {
-		res.status(500).json({ error: error });
-	}
-});
+const personRoutes = require("./routes/personRoutes");
+app.use("/person", personRoutes);
 
 app.get("/", (req, res) => {
 	res.json({ message: "Oi Express!" });
