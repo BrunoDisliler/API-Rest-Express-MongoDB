@@ -19,6 +19,16 @@ app.use(express.json());
 app.post("/person", async (req, res) => {
 	const { name, salary, approved } = req.body;
 
+	if (!name) {
+		res.status(422).json({ message: "O nome é obrigatório" });
+	} else if (!salary) {
+		res.status(422).json({ message: "O salário é obrigatório" });
+	} else if (salary <= 0) {
+		res.status(422).json({ message: "Insira um valor válido para o salário" });
+	} else if (!approved) {
+		res.status(422).json({ message: "O campo é obrigatório" });
+	}
+
 	const person = {
 		name,
 		salary,
