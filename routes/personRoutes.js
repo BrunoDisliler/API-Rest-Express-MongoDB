@@ -8,12 +8,16 @@ router.post("/", async (req, res) => {
 
 	if (!name) {
 		res.status(422).json({ message: "O nome é obrigatório" });
+		return;
 	} else if (!salary) {
 		res.status(422).json({ message: "O salário é obrigatório" });
+		return;
 	} else if (salary <= 0) {
 		res.status(422).json({ message: "Insira um valor válido para o salário" });
+		return;
 	} else if (!approved) {
 		res.status(422).json({ message: "O campo é obrigatório" });
+		return;
 	}
 
 	const person = {
@@ -49,6 +53,38 @@ router.get("/:id", async (req, res) => {
 	const id = req.params.id;
 	try {
 		const person = await Person.findOne({ _id: id });
+
+		if (!person) {
+			res.status(424).json({ message: "O usuário não foi encontrado!" });
+			return;
+		}
+
+		res.status(200).json(person);
+	} catch (error) {
+		res.status(500).json({ error: error });
+	}
+});
+
+// Update - Atualização de Dados (PUT, PATCH)
+// PUT - Aguarda o objeto completo para atualizar
+// PATCH - Aguarda apenas o objeto parcialmente
+router.patch("/:id", async (req, res) => {
+	const id = req.params.id;
+	const { name, salary, approved } = req.body;
+
+	const person = {
+		name,
+		salary,
+		approved,
+	};
+
+	try {
+		const updatedPerson = await Person.updateOne({ _id: id }, person);
+
+		if (updatedPerson.matchedCount === 0) {
+			res.status(422).json({ message: "O usuário não foi encontrado!" });
+			return;
+		}
 
 		res.status(200).json(person);
 	} catch (error) {
