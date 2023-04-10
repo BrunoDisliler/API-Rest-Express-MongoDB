@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 // Porta
 const DB_PORT = process.env.DB_PORT;
 const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
 
 // Conectando ao MongoDB
 mongoose
