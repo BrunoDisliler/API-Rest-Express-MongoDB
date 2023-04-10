@@ -36,5 +36,3 @@ mongoose
 		app.listen(DB_PORT);
 	})
 	.catch((err) => console.log(err));
-
-// mongodb+srv://brunodislilerdev:qh5eG1BvT8axqd8P@api2.ugvv994.mongodb.net/?retryWrites=true&w=majority
